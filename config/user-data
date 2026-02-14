@@ -1,0 +1,20 @@
+#cloud-config
+system_info:
+  default_user:
+    name: ubuntu
+
+# 1. SSH Public Key Injection
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEt9jPnoWHa6TDdgF9qAY74KWUlHP2EwJBFlpAsnKVYjqS+p581HBwwgGPxgGgjkWfmZL+8nAion2fdoFTGTkreYB8uHHKgzY4+GzHIkpwp8b3YZ/OUwbhWXC6BgQb8GBCY6CEfCU4nWqxU1HOr9NgOe0kmTxz1sKIAhZTdFuRKJff+CXP5lT5cbhorhnCGR2hymXxoNdKEnpYBmBfNEdmKpO6yFZyP0Vyx6YVNnZxPIbnakaYulrHzTnWYe0jWz0miSOxEMb3RHFRjAbPbXn7GZ0IPWXZ0Kp5FaxUyg1ALyvvGKlH1QaVKl7xXr9jyu4waoKKeggzfslBpqUdelPXChyGHTpYlf8zB7x+hXKYAy+H+vBN0qshHU0GyS2Ha5LcFaLN9eVbVEDctRWPgGJOqVsmYE3THWidFF6YZPifdyIHpDvZMBb9xoCP7szRjzx3d9j4Jr3qhcA2yVkZ/XkGdvaEqciKfZnPrsHkPPUSwNDACucP25A9d7Wki5Hr9u7vxBWj4t/6Q8HXs3g2RZuNTK98xYR9L/LPcyfC0HBiI/E7FCPVT19XrT9iBUK6Xl0HYVpJUjIRUNO1Mw62VhcdgCe7PTz4pWeTXxz37lttfMffAb963Py/RrJD2bgzlPbHY3jlHi6bhuehelLRD+GL0+sTaWtgoSLkXDbrlMS0YQ== tudor@debian
+
+# 2. Password Configuration (Optional fallback)
+password: admin123
+chpasswd: { expire: false }
+ssh_pwauth: true  # Set to 'false' if you ONLY want key-based access
+
+# 3. Essential Packages (for IP discovery)
+packages:
+  - qemu-guest-agent
+
+runcmd:
+  - systemctl enable --now qemu-guest-agent
